@@ -141,6 +141,12 @@
             background: #ff69b4;
             color: white;
         }
+        .size-btn.disabled {
+            background: #eee;
+            color: #aaa;
+            border-color: #ddd;
+            cursor: not-allowed;
+        }
         .inventory {
             color: #888;
             font-size: 0.9rem;
@@ -223,10 +229,10 @@
                     <h3>咖啡小花</h3>
                     <div class="price">$515</div>
                     <div class="size-buttons">
-                        <div class="size-btn" data-size="XS">豆豆甲 XS<br><span style="font-size:0.8rem;">剩4件</span></div>
-                        <div class="size-btn" data-size="S">豆豆甲 S<br><span style="font-size:0.8rem;">剩4件</span></div>
-                        <div class="size-btn" data-size="M">豆豆甲 M</div>
-                        <div class="size-btn" data-size="L">豆豆甲 L</div>
+                        <div class="size-btn" data-size="XS" data-stock="4">豆豆甲 XS</div>
+                        <div class="size-btn" data-size="S"  data-stock="4">豆豆甲 S</div>
+                        <div class="size-btn" data-size="M"  data-stock="0">豆豆甲 M</div>
+                        <div class="size-btn" data-size="L"  data-stock="0">豆豆甲 L</div>
                     </div>
                     <p class="inventory"></p>
                 </div>
@@ -317,11 +323,28 @@
         });
 
         // 尺寸選擇 (點擊切換 active，並顯示剩餘件數如果有)
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                btn.closest('.size-buttons').querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                // 如果有剩餘件數，可在此顯示 inventory
+        document.querySelectorAll('.product-item').forEach(product => {
+            const sizeBtns = product.querySelectorAll('.size-btn');
+            const inventoryEl = product.querySelector('.inventory');
+
+            sizeBtns.forEach(btn => {
+                const stock = Number(btn.dataset.stock);
+
+                // 一開始就標記售完的（但不顯示庫存）
+                if (stock === 0) {
+                    btn.classList.add('disabled');
+                }
+
+                btn.addEventListener('click', () => {
+                    if (btn.classList.contains('disabled')) {
+                        inventoryEl.textContent = '此尺寸已售完';
+                        return;
+                    }
+                    sizeBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    inventoryEl.textContent = `庫存剩餘：${stock} 件`;
+                });
             });
         });
     </script>
