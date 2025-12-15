@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bobo Goo Gee Nails | 專業美甲沙龍</title>
+    <style>
+        /* 重置與基本樣式 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+        a { text-decoration: none; color: inherit; }
+
+        /* 導航欄 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 5%;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo { font-size: 1.8rem; font-weight: bold; color: #FF69B4; }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav-links a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #FF69B4; }
+
+        /* 英雄區 */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/1920x1080/FFB6C1/FFFFFF?text=Beautiful+Nails+Hero+Image') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 5%;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            background: #FF69B4;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            transition: background 0.3s;
+        }
+        .btn:hover { background: #ff4da6; }
+
+        /* 通用區塊 */
+        section {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #FF69B4;
+        }
+
+        /* 關於 */
+        .about {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        .about img {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+        }
+        .about-text { flex: 1; }
+
+        /* 服務 */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .service-card {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* 圖庫 */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .gallery img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover { transform: scale(1.05); }
+
+        /* 聯絡 */
+        .contact form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            gap: 1rem;
+        }
+        input, textarea {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* 頁尾 (模仿 Canva 原站) */
+        footer {
+            background: #f8f8f8;
+            padding: 2rem 5%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .footer-links a {
+            margin: 0 1rem;
+            color: #00C4B4; /* Canva 藍綠色 */
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .nav-links { display: none; } /* 可加漢堡選單進階 */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Bobo Goo Gee Nails</div>
+            <div class="nav-links">
+                <a href="#home">首頁</a>
+                <a href="#about">關於</a>
+                <a href="#services">服務</a>
+                <a href="#gallery">作品</a>
+                <a href="#contact">聯絡</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>Bobo Goo Gee Nails</h1>
+        <p>讓您的指尖綻放獨特光芒</p>
+        <a href="#contact" class="btn">立即預約</a>
+    </section>
+
+    <section id="about" class="about">
+        <img src="https://via.placeholder.com/600x400/F4C2C2/FFFFFF?text=About+Us" alt="關於我們">
+        <div class="about-text">
+            <h2>關於我們</h2>
+            <p>歡迎來到 Bobo Goo Gee Nails，我們是專業的美甲沙龍，致力於提供高品質、創意的美甲服務。無論是經典法式、夢幻漸層還是個性化設計，我們都能讓您的指尖成為焦點。</p>
+        </div>
+    </section>
+
+    <section id="services">
+        <h2>我們的服務</h2>
+        <div class="services">
+            <div class="service-card">
+                <h3>基礎美甲</h3>
+                <p>修甲、護理、單色上漆</p>
+            </div>
+            <div class="service-card">
+                <h3>凝膠美甲</h3>
+                <p>持久光療、漸層設計</p>
+            </div>
+            <div class="service-card">
+                <h3>藝術美甲</h3>
+                <p>手繪、貼鑽、3D 立體</p>
+            </div>
+            <div class="service-card">
+                <h3>足部護理</h3>
+                <p>足部美甲與 SPA</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2>作品展示</h2>
+        <div class="gallery">
+            <img src="https://via.placeholder.com/400x400/FFB6C1/FFFFFF?text=Nail+Design+1" alt="美甲作品1">
+            <img src="https://via.placeholder.com/400x400/FFC0CB/FFFFFF?text=Nail+Design+2" alt="美甲作品2">
+            <img src="https://via.placeholder.com/400x400/FF69B4/FFFFFF?text=Nail+Design+3" alt="美甲作品3">
+            <img src="https://via.placeholder.com/400x400/E0B0FF/FFFFFF?text=Nail+Design+4" alt="美甲作品4">
+            <img src="https://via.placeholder.com/400x400/98FB98/FFFFFF?text=Nail+Design+5" alt="美甲作品5">
+            <img src="https://via.placeholder.com/400x400/FFD700/FFFFFF?text=Nail+Design+6" alt="美甲作品6">
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>聯絡我們</h2>
+        <form>
+            <input type="text" placeholder="您的姓名" required>
+            <input type="tel" placeholder="電話號碼" required>
+            <input type="email" placeholder="電子郵件" required>
+            <textarea rows="5" placeholder="留言或預約時間"></textarea>
+            <button type="submit" class="btn">送出訊息</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>Designed with ❤️ for Bobo Goo Gee Nails</p>
+        <div class="footer-links">
+            <a href="https://www.canva.com/terms-of-use/" target="_blank">Terms of Use</a>
+            <a href="https://www.canva.com/policies/acceptable-use-policy/" target="_blank">Acceptable Use Policy</a>
+            <a href="https://www.canva.com/policies/privacy-policy/" target="_blank">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滾動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
