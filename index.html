@@ -52,43 +52,101 @@
         .products {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 1rem;
+            gap: 1.5rem;
             margin-bottom: 3rem;
         }
         .product-item {
-            background: #f9f9f9;
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            display: none; /* 預設隱藏 */
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: none;
+            position: relative;
         }
-        .product-item img {
+
+        /* 圖片輪播 */
+        .carousel {
+            position: relative;
             width: 100%;
-            height: 150px;
+            height: 300px;
+            overflow: hidden;
+        }
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 300%; /* 3張圖 */
+        }
+        .carousel-images img {
+            width: 100%;
+            height: 300px;
             object-fit: cover;
-            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.7);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+        .indicator {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* 產品資訊 */
+        .product-info {
+            padding: 1rem;
+            text-align: center;
+        }
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
             margin-bottom: 1rem;
         }
-        .product-item h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-        .product-item select {
-            width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        .size-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1rem;
         }
-        .product-item button {
-            background: #00C4B4;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 5px;
+        .size-btn {
+            background: #f0e6e6;
+            padding: 0.8rem;
+            border-radius: 15px;
             cursor: pointer;
             transition: background 0.3s;
         }
-        .product-item button:hover { background: #009999; }
-        .product-item .inventory { display: none; color: green; margin-top: 0.5rem; }
+        .size-btn.active, .size-btn:hover {
+            background: #ff69b4;
+            color: white;
+        }
+        .inventory {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
 
         /* 頁尾 */
         footer {
@@ -101,6 +159,7 @@
             height: 200px;
             object-fit: cover;
             margin-bottom: 1rem;
+            border-radius: 10px;
         }
         .social-links {
             display: flex;
@@ -115,30 +174,26 @@
         }
         .social-links img:hover { transform: scale(1.1); }
 
-        /* 響應式調整 */
-        @media (max-width: 1200px) {
-            .products { grid-template-columns: repeat(4, 1fr); }
-        }
-        @media (max-width: 992px) {
-            .products { grid-template-columns: repeat(3, 1fr); }
-        }
+        /* 響應式 */
+        @media (max-width: 1200px) { .products { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 992px) { .products { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) {
             .products { grid-template-columns: repeat(2, 1fr); }
             .brand-intro { flex-direction: column; }
             .brand-intro img { width: 100%; }
+            .carousel { height: 250px; }
+            .carousel-images img { height: 250px; }
         }
-        @media (max-width: 576px) {
-            .products { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 576px) { .products { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- 1. 最上面放兩張圖片 (品牌介紹) -->
+        <!-- 1. 最上面兩張品牌介紹圖片 -->
         <div class="brand-intro">
-            <img src="https://via.placeholder.com/600x300/FFB6C1/FFFFFF?text=Brand+Image+1" alt="品牌介紹圖1">
-            <img src="https://via.placeholder.com/600x300/FFC0CB/FFFFFF?text=Brand+Image+2" alt="品牌介紹圖2">
+            <img src="https://via.placeholder.com/600x300/FFB6C1/FFFFFF?text=Brand+Image+1" alt="品牌介紹1">
+            <img src="https://via.placeholder.com/600x300/FFC0CB/FFFFFF?text=Brand+Image+2" alt="品牌介紹2">
         </div>
 
         <!-- 2. 類別清單 -->
@@ -149,78 +204,64 @@
             <div class="category-btn" data-category="limited">限定款式</div>
         </div>
 
-        <!-- 3. 產品顯示區 (一行5個) -->
+        <!-- 3. 產品顯示區 -->
         <div class="products">
-            <!-- 現貨款式 (範例產品) -->
+            <!-- 範例產品：咖啡小花 (現貨) -->
             <div class="product-item" data-category="stock">
-                <img src="https://via.placeholder.com/200x200/FF69B4/FFFFFF?text=現貨1" alt="現貨款式1">
-                <h3>現貨款式1</h3>
-                <select>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                </select>
-                <button onclick="showInventory(this)">查看庫存</button>
-                <p class="inventory">庫存：10 件</p>
+                <div class="carousel">
+                    <button class="carousel-btn prev">&#8249;</button>
+                    <button class="carousel-btn next">&#8250;</button>
+                    <div class="indicator">1/3</div>
+                    <div class="carousel-images">
+                        <!-- 三張圖片 (替換成你的真實圖片) -->
+                        <img src="https://www.glam.com/img/gallery/32-autumnal-floral-manicure-ideas-to-keep-your-fave-nail-art-into-fall/l-intro-1697063260.jpg" alt="咖啡小花1">
+                        <img src="https://www.glam.com/img/gallery/32-autumnal-floral-manicure-ideas-to-keep-your-fave-nail-art-into-fall/groovy-fall-nail-palette-1697063260.jpg" alt="咖啡小花2">
+                        <img src="https://assets.teenvogue.com/photos/66d9e765debf95906cd63a86/16:9/w_1280,c_limit/fall%20nails%202024%20fina;.jpg" alt="咖啡小花3">
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>咖啡小花</h3>
+                    <div class="price">$515</div>
+                    <div class="size-buttons">
+                        <div class="size-btn" data-size="XS">豆豆甲 XS<br><span style="font-size:0.8rem;">剩4件</span></div>
+                        <div class="size-btn" data-size="S">豆豆甲 S<br><span style="font-size:0.8rem;">剩4件</span></div>
+                        <div class="size-btn" data-size="M">豆豆甲 M</div>
+                        <div class="size-btn" data-size="L">豆豆甲 L</div>
+                    </div>
+                    <p class="inventory"></p>
+                </div>
             </div>
+
+            <!-- 你可以複製以上產品區塊新增更多產品，並改變 data-category 和圖片 -->
+            <!-- 例如另一個產品 -->
             <div class="product-item" data-category="stock">
-                <img src="https://via.placeholder.com/200x200/FF69B4/FFFFFF?text=現貨2" alt="現貨款式2">
-                <h3>現貨款式2</h3>
-                <select>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                </select>
-                <button onclick="showInventory(this)">查看庫存</button>
-                <p class="inventory">庫存：5 件</p>
+                <div class="carousel">
+                    <button class="carousel-btn prev">&#8249;</button>
+                    <button class="carousel-btn next">&#8250;</button>
+                    <div class="indicator">1/3</div>
+                    <div class="carousel-images">
+                        <img src="https://via.placeholder.com/400x300/FF69B4/FFFFFF?text=產品2-圖1" alt="產品2-1">
+                        <img src="https://via.placeholder.com/400x300/E0B0FF/FFFFFF?text=產品2-圖2" alt="產品2-2">
+                        <img src="https://via.placeholder.com/400x300/98FB98/FFFFFF?text=產品2-圖3" alt="產品2-3">
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3>現貨款式2</h3>
+                    <div class="price">$600</div>
+                    <div class="size-buttons">
+                        <div class="size-btn active" data-size="XS">豆豆甲 XS</div>
+                        <div class="size-btn" data-size="S">豆豆甲 S</div>
+                        <div class="size-btn" data-size="M">豆豆甲 M</div>
+                        <div class="size-btn" data-size="L">豆豆甲 L</div>
+                    </div>
+                </div>
             </div>
-            <!-- 添加更多現貨產品... -->
 
-            <!-- 預約款式 -->
-            <div class="product-item" data-category="预约">
-                <img src="https://via.placeholder.com/200x200/E0B0FF/FFFFFF?text=預約1" alt="預約款式1">
-                <h3>預約款式1</h3>
-                <select>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                </select>
-                <button onclick="showInventory(this)">查看庫存</button>
-                <p class="inventory">庫存：預約中</p>
-            </div>
-            <!-- 添加更多預約產品... -->
-
-            <!-- 兒童款式 -->
-            <div class="product-item" data-category="children">
-                <img src="https://via.placeholder.com/200x200/98FB98/FFFFFF?text=兒童1" alt="兒童款式1">
-                <h3>兒童款式1</h3>
-                <select>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                </select>
-                <button onclick="showInventory(this)">查看庫存</button>
-                <p class="inventory">庫存：15 件</p>
-            </div>
-            <!-- 添加更多兒童產品... -->
-
-            <!-- 限定款式 -->
-            <div class="product-item" data-category="limited">
-                <img src="https://via.placeholder.com/200x200/FFD700/FFFFFF?text=限定1" alt="限定款式1">
-                <h3>限定款式1</h3>
-                <select>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                </select>
-                <button onclick="showInventory(this)">查看庫存</button>
-                <p class="inventory">庫存：限量 3 件</p>
-            </div>
-            <!-- 添加更多限定產品... -->
+            <!-- 更多產品... -->
         </div>
     </div>
 
-    <!-- 5. 頁尾: 一張圖片，兩側 IG 和 LINE 圖標超連結 -->
+    <!-- 5. 頁尾 -->
     <footer>
         <img class="footer-img" src="https://via.placeholder.com/1200x200/F4C2C2/FFFFFF?text=Footer+Image" alt="頁尾圖片">
         <div class="social-links">
@@ -248,15 +289,41 @@
                 });
             });
         });
-
-        // 初始顯示現貨
         document.querySelector('.category-btn.active').click();
 
-        // 查看庫存功能
-        function showInventory(btn) {
-            const inventory = btn.nextElementSibling;
-            inventory.style.display = inventory.style.display === 'block' ? 'none' : 'block';
-        }
+        // 每個產品的輪播
+        document.querySelectorAll('.carousel').forEach(carousel => {
+            const images = carousel.querySelector('.carousel-images');
+            const prev = carousel.querySelector('.prev');
+            const next = carousel.querySelector('.next');
+            const indicator = carousel.querySelector('.indicator');
+            let current = 0;
+            const total = 3;
+
+            function update() {
+                images.style.transform = `translateX(-${current * 100}%)`;
+                indicator.textContent = `${current + 1}/${total}`;
+            }
+
+            prev.addEventListener('click', () => {
+                current = (current - 1 + total) % total;
+                update();
+            });
+            next.addEventListener('click', () => {
+                current = (current + 1) % total;
+                update();
+            });
+            update();
+        });
+
+        // 尺寸選擇 (點擊切換 active，並顯示剩餘件數如果有)
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.closest('.size-buttons').querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // 如果有剩餘件數，可在此顯示 inventory
+            });
+        });
     </script>
 </body>
 </html>
