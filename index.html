@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bobo Goo Gee Nails | 專業美甲沙龍</title>
+    <title>Bobo Goo Gee Nails | 美甲商品模板</title>
     <style>
         /* 重置與基本樣式 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,245 +14,249 @@
             background-color: #fff;
         }
         a { text-decoration: none; color: inherit; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 1rem; }
 
-        /* 導航欄 */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-            padding: 1rem 5%;
-        }
-        nav {
+        /* 頂部品牌介紹圖片 */
+        .brand-intro {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .logo { font-size: 1.8rem; font-weight: bold; color: #FF69B4; }
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-        .nav-links a {
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover { color: #FF69B4; }
-
-        /* 英雄區 */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/1920x1080/FFB6C1/FFFFFF?text=Beautiful+Nails+Hero+Image') center/cover no-repeat;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 5%;
-        }
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-        .hero p {
-            font-size: 1.5rem;
+            gap: 1rem;
             margin-bottom: 2rem;
         }
-        .btn {
-            background: #FF69B4;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            transition: background 0.3s;
-        }
-        .btn:hover { background: #ff4da6; }
-
-        /* 通用區塊 */
-        section {
-            padding: 5rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #FF69B4;
+        .brand-intro img {
+            width: 49%;
+            height: auto;
+            border-radius: 10px;
+            object-fit: cover;
         }
 
-        /* 關於 */
-        .about {
+        /* 類別清單 */
+        .categories {
             display: flex;
-            align-items: center;
-            gap: 3rem;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
         }
-        .about img {
-            flex: 1;
-            min-width: 300px;
-            border-radius: 10px;
+        .category-btn {
+            background: #FF69B4;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
         }
-        .about-text { flex: 1; }
+        .category-btn:hover, .category-btn.active { background: #ff4da6; }
 
-        /* 服務 */
-        .services {
+        /* 產品格子 */
+        .products {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 3rem;
         }
-        .service-card {
+        .product-item {
             background: #f9f9f9;
-            padding: 2rem;
+            padding: 1rem;
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: none; /* 預設隱藏 */
         }
-
-        /* 圖庫 */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        .gallery img {
+        .product-item img {
             width: 100%;
+            height: 150px;
+            object-fit: cover;
             border-radius: 10px;
-            transition: transform 0.3s;
+            margin-bottom: 1rem;
         }
-        .gallery img:hover { transform: scale(1.05); }
-
-        /* 聯絡 */
-        .contact form {
-            max-width: 600px;
-            margin: 0 auto;
-            display: grid;
-            gap: 1rem;
-        }
-        input, textarea {
-            padding: 1rem;
+        .product-item h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .product-item select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        .product-item button {
+            background: #00C4B4;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .product-item button:hover { background: #009999; }
+        .product-item .inventory { display: none; color: green; margin-top: 0.5rem; }
 
-        /* 頁尾 (模仿 Canva 原站) */
+        /* 頁尾 */
         footer {
             background: #f8f8f8;
-            padding: 2rem 5%;
+            padding: 2rem 0;
             text-align: center;
-            font-size: 0.9rem;
-            color: #666;
         }
-        .footer-links a {
-            margin: 0 1rem;
-            color: #00C4B4; /* Canva 藍綠色 */
+        .footer-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 1rem;
         }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .social-links img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        .social-links img:hover { transform: scale(1.1); }
 
         /* 響應式調整 */
+        @media (max-width: 1200px) {
+            .products { grid-template-columns: repeat(4, 1fr); }
+        }
+        @media (max-width: 992px) {
+            .products { grid-template-columns: repeat(3, 1fr); }
+        }
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
-            .nav-links { display: none; } /* 可加漢堡選單進階 */
+            .products { grid-template-columns: repeat(2, 1fr); }
+            .brand-intro { flex-direction: column; }
+            .brand-intro img { width: 100%; }
+        }
+        @media (max-width: 576px) {
+            .products { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <nav>
-            <div class="logo">Bobo Goo Gee Nails</div>
-            <div class="nav-links">
-                <a href="#home">首頁</a>
-                <a href="#about">關於</a>
-                <a href="#services">服務</a>
-                <a href="#gallery">作品</a>
-                <a href="#contact">聯絡</a>
-            </div>
-        </nav>
-    </header>
-
-    <section id="home" class="hero">
-        <h1>Bobo Goo Gee Nails</h1>
-        <p>讓您的指尖綻放獨特光芒</p>
-        <a href="#contact" class="btn">立即預約</a>
-    </section>
-
-    <section id="about" class="about">
-        <img src="https://via.placeholder.com/600x400/F4C2C2/FFFFFF?text=About+Us" alt="關於我們">
-        <div class="about-text">
-            <h2>關於我們</h2>
-            <p>歡迎來到 Bobo Goo Gee Nails，我們是專業的美甲沙龍，致力於提供高品質、創意的美甲服務。無論是經典法式、夢幻漸層還是個性化設計，我們都能讓您的指尖成為焦點。</p>
+    <div class="container">
+        <!-- 1. 最上面放兩張圖片 (品牌介紹) -->
+        <div class="brand-intro">
+            <img src="https://via.placeholder.com/600x300/FFB6C1/FFFFFF?text=Brand+Image+1" alt="品牌介紹圖1">
+            <img src="https://via.placeholder.com/600x300/FFC0CB/FFFFFF?text=Brand+Image+2" alt="品牌介紹圖2">
         </div>
-    </section>
 
-    <section id="services">
-        <h2>我們的服務</h2>
-        <div class="services">
-            <div class="service-card">
-                <h3>基礎美甲</h3>
-                <p>修甲、護理、單色上漆</p>
-            </div>
-            <div class="service-card">
-                <h3>凝膠美甲</h3>
-                <p>持久光療、漸層設計</p>
-            </div>
-            <div class="service-card">
-                <h3>藝術美甲</h3>
-                <p>手繪、貼鑽、3D 立體</p>
-            </div>
-            <div class="service-card">
-                <h3>足部護理</h3>
-                <p>足部美甲與 SPA</p>
-            </div>
+        <!-- 2. 類別清單 -->
+        <div class="categories">
+            <div class="category-btn active" data-category="stock">現貨款式</div>
+            <div class="category-btn" data-category="预约">預約款式</div>
+            <div class="category-btn" data-category="children">兒童款式</div>
+            <div class="category-btn" data-category="limited">限定款式</div>
         </div>
-    </section>
 
-    <section id="gallery">
-        <h2>作品展示</h2>
-        <div class="gallery">
-            <img src="https://via.placeholder.com/400x400/FFB6C1/FFFFFF?text=Nail+Design+1" alt="美甲作品1">
-            <img src="https://via.placeholder.com/400x400/FFC0CB/FFFFFF?text=Nail+Design+2" alt="美甲作品2">
-            <img src="https://via.placeholder.com/400x400/FF69B4/FFFFFF?text=Nail+Design+3" alt="美甲作品3">
-            <img src="https://via.placeholder.com/400x400/E0B0FF/FFFFFF?text=Nail+Design+4" alt="美甲作品4">
-            <img src="https://via.placeholder.com/400x400/98FB98/FFFFFF?text=Nail+Design+5" alt="美甲作品5">
-            <img src="https://via.placeholder.com/400x400/FFD700/FFFFFF?text=Nail+Design+6" alt="美甲作品6">
+        <!-- 3. 產品顯示區 (一行5個) -->
+        <div class="products">
+            <!-- 現貨款式 (範例產品) -->
+            <div class="product-item" data-category="stock">
+                <img src="https://via.placeholder.com/200x200/FF69B4/FFFFFF?text=現貨1" alt="現貨款式1">
+                <h3>現貨款式1</h3>
+                <select>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+                <button onclick="showInventory(this)">查看庫存</button>
+                <p class="inventory">庫存：10 件</p>
+            </div>
+            <div class="product-item" data-category="stock">
+                <img src="https://via.placeholder.com/200x200/FF69B4/FFFFFF?text=現貨2" alt="現貨款式2">
+                <h3>現貨款式2</h3>
+                <select>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+                <button onclick="showInventory(this)">查看庫存</button>
+                <p class="inventory">庫存：5 件</p>
+            </div>
+            <!-- 添加更多現貨產品... -->
+
+            <!-- 預約款式 -->
+            <div class="product-item" data-category="预约">
+                <img src="https://via.placeholder.com/200x200/E0B0FF/FFFFFF?text=預約1" alt="預約款式1">
+                <h3>預約款式1</h3>
+                <select>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+                <button onclick="showInventory(this)">查看庫存</button>
+                <p class="inventory">庫存：預約中</p>
+            </div>
+            <!-- 添加更多預約產品... -->
+
+            <!-- 兒童款式 -->
+            <div class="product-item" data-category="children">
+                <img src="https://via.placeholder.com/200x200/98FB98/FFFFFF?text=兒童1" alt="兒童款式1">
+                <h3>兒童款式1</h3>
+                <select>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+                <button onclick="showInventory(this)">查看庫存</button>
+                <p class="inventory">庫存：15 件</p>
+            </div>
+            <!-- 添加更多兒童產品... -->
+
+            <!-- 限定款式 -->
+            <div class="product-item" data-category="limited">
+                <img src="https://via.placeholder.com/200x200/FFD700/FFFFFF?text=限定1" alt="限定款式1">
+                <h3>限定款式1</h3>
+                <select>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+                <button onclick="showInventory(this)">查看庫存</button>
+                <p class="inventory">庫存：限量 3 件</p>
+            </div>
+            <!-- 添加更多限定產品... -->
         </div>
-    </section>
+    </div>
 
-    <section id="contact" class="contact">
-        <h2>聯絡我們</h2>
-        <form>
-            <input type="text" placeholder="您的姓名" required>
-            <input type="tel" placeholder="電話號碼" required>
-            <input type="email" placeholder="電子郵件" required>
-            <textarea rows="5" placeholder="留言或預約時間"></textarea>
-            <button type="submit" class="btn">送出訊息</button>
-        </form>
-    </section>
-
+    <!-- 5. 頁尾: 一張圖片，兩側 IG 和 LINE 圖標超連結 -->
     <footer>
-        <p>Designed with ❤️ for Bobo Goo Gee Nails</p>
-        <div class="footer-links">
-            <a href="https://www.canva.com/terms-of-use/" target="_blank">Terms of Use</a>
-            <a href="https://www.canva.com/policies/acceptable-use-policy/" target="_blank">Acceptable Use Policy</a>
-            <a href="https://www.canva.com/policies/privacy-policy/" target="_blank">Privacy Policy</a>
+        <img class="footer-img" src="https://via.placeholder.com/1200x200/F4C2C2/FFFFFF?text=Footer+Image" alt="頁尾圖片">
+        <div class="social-links">
+            <a href="https://www.instagram.com/your-ig-account" target="_blank">
+                <img src="https://via.placeholder.com/50x50/833AB4/FFFFFF?text=IG" alt="Instagram">
+            </a>
+            <a href="https://line.me/ti/p/your-line-id" target="_blank">
+                <img src="https://via.placeholder.com/50x50/00C300/FFFFFF?text=LINE" alt="LINE">
+            </a>
         </div>
     </footer>
 
     <script>
-        // 平滑滾動
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        // 類別切換
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const productItems = document.querySelectorAll('.product-item');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const category = btn.getAttribute('data-category');
+                productItems.forEach(item => {
+                    item.style.display = item.getAttribute('data-category') === category ? 'block' : 'none';
                 });
             });
         });
+
+        // 初始顯示現貨
+        document.querySelector('.category-btn.active').click();
+
+        // 查看庫存功能
+        function showInventory(btn) {
+            const inventory = btn.nextElementSibling;
+            inventory.style.display = inventory.style.display === 'block' ? 'none' : 'block';
+        }
     </script>
 </body>
 </html>
